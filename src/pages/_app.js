@@ -1,5 +1,15 @@
 import '@/styles/globals.css'
+import createCache from '@emotion/cache';
+import { CacheProvider } from '@emotion/react';
 
-export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />
+const clientSideEmotionCache = createCache({ key: 'css' });
+
+function App({ Component, pageProps, emotionCache = clientSideEmotionCache }) {
+  return (
+    <CacheProvider value={emotionCache}>
+      <Component {...pageProps} />
+    </CacheProvider>
+  )
 }
+
+export default App;
