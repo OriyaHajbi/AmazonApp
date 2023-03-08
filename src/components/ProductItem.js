@@ -5,7 +5,6 @@ import React from 'react'
 export default function ProductItem({ product }) {
     return (
         <Card>
-
             <CardActionArea>
                 <CardMedia component='img' image={urlForThumbnail(product.image)} title={product.title} />
                 <CardContent>
