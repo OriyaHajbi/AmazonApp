@@ -1,7 +1,6 @@
 import { AppBar, CssBaseline, ThemeProvider, Toolbar, Typography, Container, Box, Link, Switch } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import Head from "next/head";
-import NextLink from 'next/link';
 import classes from "../utils/classes";
 import { useContext } from 'react';
 import { Store } from "@/utils/Store";
