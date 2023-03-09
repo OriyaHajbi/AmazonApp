@@ -2,7 +2,7 @@ import { urlForThumbnail } from '@/utils/image'
 import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Link, Rating, Typography } from '@mui/material'
 import React from 'react'
 
-export default function ProductItem({ product }) {
+export default function ProductItem({ product, addToCartHandler }) {
     return (
         <Card>
             <CardActionArea>
@@ -17,7 +17,7 @@ export default function ProductItem({ product }) {
 
             <CardActions>
                 <Typography>${product.price}</Typography>
-                <Button size='small' color='primary'>Add to cart</Button>
+                <Button size='small' color='primary' onClick={() => addToCartHandler(product)}>Add to cart</Button>
             </CardActions>
         </Card>
     )

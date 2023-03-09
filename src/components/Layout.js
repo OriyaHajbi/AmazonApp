@@ -1,14 +1,20 @@
-import { AppBar, CssBaseline, ThemeProvider, Toolbar, Typography, Container, Box, Link, Switch } from "@mui/material";
+import { AppBar, CssBaseline, ThemeProvider, Toolbar, Typography, Container, Box, Link, Switch, Badge } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import Head from "next/head";
 import classes from "../utils/classes";
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Store } from "@/utils/Store";
 import jsCookie from 'js-cookie';
 
 function Layout({ title, description, children }) {
     const { state, dispatch } = useContext(Store);
-    const { darkMode } = state;
+    const [domLoaded, setDomLoaded] = useState(false);
+    const { darkMode, cart } = state;
+
+    useEffect(() => {
+        setDomLoaded(true);
+    }, []);
+
     const theme = createTheme({
         components: {
             MuiLink: {
@@ -63,6 +69,15 @@ function Layout({ title, description, children }) {
                         </Box>
                         <Box>
                             <Switch checked={darkMode} onChange={darkModeChangeHandler}></Switch>
+                            <Link href="/cart">
+                                <Typography component="span">
+                                    {domLoaded && cart.cartItems.length > 0 ? (
+                                        <Badge color="secondary" badgeContent={cart.cartItems.length}>Cart</Badge>
+                                    ) : (
+                                        'Cart'
+                                    )}
+                                </Typography>
+                            </Link>
                         </Box>
 
                     </Toolbar>
