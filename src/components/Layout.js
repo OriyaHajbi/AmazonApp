@@ -78,6 +78,9 @@ function Layout({ title, description, children }) {
                                     )}
                                 </Typography>
                             </Link>
+                            <Link href="login">
+                                Login
+                            </Link>
                         </Box>
 
                     </Toolbar>
