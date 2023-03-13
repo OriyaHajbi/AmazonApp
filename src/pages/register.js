@@ -1,13 +1,51 @@
 import Form from '@/components/Form';
 import Layout from '@/components/Layout';
+import { Store } from '@/utils/Store';
 import { Button, Link, List, ListItem, TextField, Typography } from '@mui/material';
-import React from 'react'
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
+import { useSnackbar } from 'notistack';
+import React, { useContext, useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form';
 
-export default function LoginScreen() {
-    const { handleSubmit, control, formState: { errors } } = useForm();
-    const submitHandler = async ({ name, email, password, confirmpassword }) => {
+export default function RegisterScreen() {
+    const { state, dispatch } = useContext(Store);
+    const { userInfo } = state;
+    const router = useRouter();
 
+
+    useEffect(() => {
+        if (userInfo) {
+            router.push('/');
+        }
+    }, [router, userInfo])
+
+
+    const { handleSubmit, control, formState: { errors } } = useForm();
+    const { enqueueSnackbar } = useSnackbar();
+    const submitHandler = async ({ name, email, password, confirmpassword }) => {
+        if (password !== confirmpassword) {
+            enqueueSnackbar("passwords don't match", {
+                variant: 'error'
+            });
+            return;
+        }
+        try {
+            console.log("before");
+            const { data } = await axios.post('/api/users/register', {
+                name, email, password
+            });
+            console.log("after");
+            console.log(data);
+            dispatch({ type: 'USER_LOGIN', payload: data });
+            Cookies.set('userInfo', JSON.stringify(data));
+            router.push('/');
+        } catch (err) {
+            enqueueSnackbar(err.message, {
+                variant: 'error'
+            });
+        }
     };
 
     return (
@@ -72,14 +110,14 @@ export default function LoginScreen() {
                                     inputProps={{ type: 'password' }}
                                     error={Boolean(errors.confirmpassword)}
                                     helperText={errors.confirmpassword ?
-                                        errors.password.type === 'minLength' ? 'Confirm Password length is more than 5' : 'Confirm Password is required' : ''}
+                                        errors.confirmpassword.type === 'minLength' ? 'Confirm Password length is more than 5' : 'Confirm Password is required' : ''}
                                     {...field}>
                                 </TextField>)}>
                         </Controller>
                     </ListItem>
                     <ListItem>
                         <Button variant='contained' type='submit' fullWidth color='primary'>
-                            Login
+                            Register
                         </Button>
                     </ListItem>
                     <ListItem>

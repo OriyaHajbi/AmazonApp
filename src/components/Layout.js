@@ -9,7 +9,7 @@ import jsCookie from 'js-cookie';
 function Layout({ title, description, children }) {
     const { state, dispatch } = useContext(Store);
     const [domLoaded, setDomLoaded] = useState(false);
-    const { darkMode, cart } = state;
+    const { darkMode, cart, userInfo } = state;
 
     useEffect(() => {
         setDomLoaded(true);
@@ -78,9 +78,15 @@ function Layout({ title, description, children }) {
                                     )}
                                 </Typography>
                             </Link>
-                            <Link href="login">
-                                Login
-                            </Link>
+                            {userInfo ? (
+                                <Link href="/profile">
+                                    {userInfo.name}
+                                </Link>
+                            ) : (
+                                <Link href="/login">
+                                    Login
+                                </Link>)}
+
                         </Box>
 
                     </Toolbar>

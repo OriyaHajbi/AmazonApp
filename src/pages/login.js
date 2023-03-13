@@ -4,7 +4,7 @@ import { Button, Link, List, ListItem, TextField, Typography } from '@mui/materi
 import React from 'react'
 import { useForm, Controller } from 'react-hook-form';
 
-export default function RegisterScreen() {
+export default function LoginScreen() {
     const { handleSubmit, control, formState: { errors } } = useForm();
     const submitHandler = async ({ email, password }) => {
 
