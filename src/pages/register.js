@@ -14,13 +14,13 @@ export default function RegisterScreen() {
     const { state, dispatch } = useContext(Store);
     const { userInfo } = state;
     const router = useRouter();
-
+    const { redirect } = router.query;
 
     useEffect(() => {
         if (userInfo) {
-            router.push('/');
+            router.push(redirect || '/');
         }
-    }, [router, userInfo]);
+    }, [router, userInfo, redirect]);
 
 
     const { handleSubmit, control, formState: { errors } } = useForm();
@@ -38,7 +38,7 @@ export default function RegisterScreen() {
             });
             dispatch({ type: 'USER_LOGIN', payload: data });
             Cookies.set('userInfo', JSON.stringify(data));
-            router.push('/');
+            router.push(redirect || '/');
         } catch (err) {
             enqueueSnackbar(getError(err), {
                 variant: 'error'
@@ -119,7 +119,7 @@ export default function RegisterScreen() {
                         </Button>
                     </ListItem>
                     <ListItem>
-                        Already have an account? <Link href='/login'>Login</Link>
+                        Already have an account? <Link href={`login?redirect=${redirect || '/'}`}>Login</Link>
                     </ListItem>
                 </List>
             </Form>

@@ -14,12 +14,13 @@ export default function LoginScreen() {
     const { state, dispatch } = useContext(Store);
     const { userInfo } = state;
     const router = useRouter();
+    const { redirect } = router.query;
 
     useEffect(() => {
         if (userInfo) {
-            router.push('/');
+            router.push(redirect || '/');
         }
-    }, [router, userInfo]);
+    }, [router, userInfo, redirect]);
 
     const { handleSubmit, control, formState: { errors } } = useForm();
     const { enqueueSnackbar } = useSnackbar();
@@ -33,7 +34,7 @@ export default function LoginScreen() {
             console.log(data);
             dispatch({ type: 'USER_LOGIN', payload: data });
             Cookies.set('userInfo', JSON.stringify(data));
-            router.push('/');
+            router.push(redirect || '/');
         } catch (err) {
             enqueueSnackbar(getError(err), {
                 variant: 'error'
@@ -84,7 +85,7 @@ export default function LoginScreen() {
                         </Button>
                     </ListItem>
                     <ListItem>
-                        Do not have an account? <Link href='/register'>Register</Link>
+                        Do not have an account? <Link href={`/register?redirect=${redirect || '/'}`}>Register</Link>
                     </ListItem>
                 </List>
             </Form>

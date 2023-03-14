@@ -5,7 +5,7 @@ import { urlFor, urlForThumbnail } from "@/utils/image";
 import { Store } from "@/utils/Store";
 import { Alert, Button, Card, CircularProgress, Grid, Link, List, ListItem, Rating, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import Image from "next/image";
+import Image from 'next/legacy/image'
 import { useState, useEffect, useContext } from "react";
 import { useSnackbar } from "notistack";
 import axios from "axios";

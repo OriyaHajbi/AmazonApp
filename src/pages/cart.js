@@ -4,6 +4,7 @@ import { Box, Button, Card, Grid, Link, List, ListItem, MenuItem, Select, Table,
 import axios from "axios";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useContext } from "react";
 
@@ -12,6 +13,7 @@ function CartScreen() {
         state: { cart: { cartItems } },
         dispatch,
     } = useContext(Store);
+    const router = useRouter();
     const { enqueueSnackbar } = useSnackbar();
 
     const updateCartHandler = async (item, quantity) => {
@@ -113,7 +115,8 @@ function CartScreen() {
                                     </Typography>
                                 </ListItem>
                                 <ListItem>
-                                    <Button fullWidth color="primary" variant="contained">
+                                    <Button fullWidth color="primary" variant="contained"
+                                        onClick={() => { router.push('/shipping') }}>
                                         Checkout
                                     </Button>
                                 </ListItem>
