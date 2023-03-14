@@ -1,12 +1,14 @@
-import { AppBar, CssBaseline, ThemeProvider, Toolbar, Typography, Container, Box, Link, Switch, Badge } from "@mui/material";
+import { AppBar, CssBaseline, ThemeProvider, Toolbar, Typography, Container, Box, Link, Switch, Badge, Button, Menu, MenuItem } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import Head from "next/head";
 import classes from "../utils/classes";
 import { useContext, useEffect, useState } from 'react';
 import { Store } from "@/utils/Store";
 import jsCookie from 'js-cookie';
+import { useRouter } from "next/router";
 
 function Layout({ title, description, children }) {
+    const router = useRouter();
     const { state, dispatch } = useContext(Store);
     const [domLoaded, setDomLoaded] = useState(false);
     const { darkMode, cart, userInfo } = state;
@@ -51,6 +53,25 @@ function Layout({ title, description, children }) {
         const newDarkMode = !darkMode;
         jsCookie.set('darkMode', newDarkMode ? 'ON' : 'OFF');
     };
+    const [anchorEl, setAnchorEl] = useState(null);
+    const loginMenuCloseHandler = (e, redirect) => {
+        setAnchorEl(null);
+        if (redirect) {
+            router.push(redirect);
+        }
+    };
+
+    const loginClickHandler = (e) => {
+        setAnchorEl(e.currentTarget);
+    };
+    const logoutClickHandler = () => {
+        setAnchorEl(null);
+        dispatch({ type: 'USER_LOGOUT' });
+        jsCookie.remove('userInfo');
+        jsCookie.remove('cartItems');
+        router.push('/');
+    };
+
     return (
         <>
             <Head>
@@ -79,9 +100,26 @@ function Layout({ title, description, children }) {
                                 </Typography>
                             </Link>
                             {userInfo ? (
-                                <Link href="/profile">
-                                    {userInfo.name}
-                                </Link>
+                                <>
+                                    <Button aria-controls="simple-menu"
+                                        aria-haspopup="true"
+                                        sx={classes.navbarButton}
+                                        onClick={loginClickHandler}>
+                                        {userInfo.name}
+                                    </Button>
+                                    <Menu id="simple-menu"
+                                        anchorEl={anchorEl}
+                                        keepMounted
+                                        open={Boolean(anchorEl)}
+                                        onClose={loginMenuCloseHandler}>
+                                        <MenuItem onClick={(e) => loginMenuCloseHandler(e, '/profile')}>
+                                            Profile
+                                        </MenuItem>
+                                        <MenuItem onClick={logoutClickHandler}>
+                                            Logout
+                                        </MenuItem>
+                                    </Menu>
+                                </>
                             ) : (
                                 <Link href="/login">
                                     Login

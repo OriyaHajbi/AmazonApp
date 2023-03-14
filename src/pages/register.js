@@ -1,5 +1,6 @@
 import Form from '@/components/Form';
 import Layout from '@/components/Layout';
+import { getError } from '@/utils/error';
 import { Store } from '@/utils/Store';
 import { Button, Link, List, ListItem, TextField, Typography } from '@mui/material';
 import axios from 'axios';
@@ -19,7 +20,7 @@ export default function RegisterScreen() {
         if (userInfo) {
             router.push('/');
         }
-    }, [router, userInfo])
+    }, [router, userInfo]);
 
 
     const { handleSubmit, control, formState: { errors } } = useForm();
@@ -32,17 +33,14 @@ export default function RegisterScreen() {
             return;
         }
         try {
-            console.log("before");
             const { data } = await axios.post('/api/users/register', {
                 name, email, password
             });
-            console.log("after");
-            console.log(data);
             dispatch({ type: 'USER_LOGIN', payload: data });
             Cookies.set('userInfo', JSON.stringify(data));
             router.push('/');
         } catch (err) {
-            enqueueSnackbar(err.message, {
+            enqueueSnackbar(getError(err), {
                 variant: 'error'
             });
         }
