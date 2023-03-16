@@ -31,6 +31,7 @@ export default function LoginScreen() {
             const { data } = await axios.post('/api/users/login', {
                 email, password
             });
+            console.log("here");
             console.log(data);
             dispatch({ type: 'USER_LOGIN', payload: data });
             Cookies.set('userInfo', JSON.stringify(data));

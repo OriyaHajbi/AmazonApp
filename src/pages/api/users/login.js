@@ -6,9 +6,11 @@ import { client } from '@/utils/client';
 const handler = nc();
 
 handler.post(async (req, res) => {
+    console.log("in login");
     const user = await client.fetch(`*[_type == "user" && email == $email][0]`, {
         email: req.body.email
     });
+
     if (user && bcrypt.compareSync(req.body.password, user.password)) {
         const token = signToken({
             _id: user._id,
@@ -24,7 +26,7 @@ handler.post(async (req, res) => {
             token,
         });
     } else {
-        res.statusCode(401).send({ message: "Invalid email or password" });
+        res.status(401).send({ message: "Invalid email or password" });
     }
 })
 
