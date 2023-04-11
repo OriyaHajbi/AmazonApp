@@ -12,7 +12,7 @@ export default {
             to: [{ type: 'user' }],
             options: {
                 disableNew: true,
-            }
+            },
         },
         {
             name: 'userName',
@@ -21,42 +21,42 @@ export default {
         },
         {
             name: 'itemsPrice',
-            title: 'ItemsPrice',
+            title: 'itemsPrice',
             type: 'number',
         },
         {
             name: 'shippingPrice',
-            title: 'ShippingPrice',
+            title: 'shippingPrice',
             type: 'number',
         },
         {
             name: 'taxPrice',
-            title: 'TaxPrice',
+            title: 'taxPrice',
             type: 'number',
         },
         {
             name: 'totalPrice',
-            title: 'TotalPrice',
+            title: 'totalPrice',
             type: 'number',
         },
         {
             name: 'paymentMethod',
-            title: 'PaymentMethod',
+            title: 'paymentMethod',
             type: 'string',
         },
         {
             name: 'shippingAddress',
-            title: 'ShippingAddress',
+            title: 'shippingAddress',
             type: 'shippingAddress',
         },
         {
             name: 'paymentResult',
-            title: 'PaymentResult',
+            title: 'paymentResult',
             type: 'paymentResult',
         },
         {
             name: 'orderItems',
-            title: 'OrderItems',
+            title: 'order Items',
             type: 'array',
             of: [
                 {
@@ -90,7 +90,5 @@ export default {
             title: 'CreatedAt',
             type: 'datetime',
         },
-
-
     ],
 };

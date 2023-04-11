@@ -12,6 +12,7 @@ handler.post(async (req, res) => {
     });
 
     if (user && bcrypt.compareSync(req.body.password, user.password)) {
+        console.log("in if login");
         const token = signToken({
             _id: user._id,
             name: user.name,
@@ -26,8 +27,10 @@ handler.post(async (req, res) => {
             token,
         });
     } else {
+        console.log("in else login");
         res.status(401).send({ message: "Invalid email or password" });
     }
+    console.log("after login");
 })
 
 export default handler;

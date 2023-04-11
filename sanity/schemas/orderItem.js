@@ -23,5 +23,5 @@ export default {
             name: 'price',
             type: 'number',
         },
-    ]
-}
+    ],
+};
